@@ -1,0 +1,24 @@
+{
+  "name": "challenge-18-nosql-awy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndrewYoung72/challenge-18-nosql-awy.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AndrewYoung72/challenge-18-nosql-awy/issues"
+  },
+  "homepage": "https://github.com/AndrewYoung72/challenge-18-nosql-awy#readme",
+  "dependencies": {
+    "mongodb": "^4.7.0",
+    "mongoose": "^6.4.1"
+  }
+}
