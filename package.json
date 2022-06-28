@@ -18,7 +18,9 @@
   },
   "homepage": "https://github.com/AndrewYoung72/challenge-18-nosql-awy#readme",
   "dependencies": {
+    "express": "^4.18.1",
     "mongodb": "^4.7.0",
-    "mongoose": "^6.4.1"
+    "mongoose": "^6.4.1",
+    "nodemon": "^2.0.18"
   }
 }
