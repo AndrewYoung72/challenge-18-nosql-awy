@@ -1,11 +1,14 @@
 const User = require("../models/User");
+const Thought = require("../models/Thought")
 
 module.exports = {
+  // Get all users
   getUsers(req, res) {
     User.find()
       .then((users) => res.json(users))
       .catch((err) => res.status(500).json(err));
   },
+  // Get a single user
   getSingleUser(req, res) {
     User.findOne({ _id: req.params.userId })
       .then((user) =>
@@ -18,7 +21,31 @@ module.exports = {
   // create a new user
   createUser(req, res) {
     User.create(req.body)
-      .then((dbUserData) => res.json(dbUserData))
+      .then((socialNetworkDB) => res.json(socialNetworkDB))
       .catch((err) => res.status(500).json(err));
   },
+  
+  deleteUser(req, res) {
+    User.findOneAndRemove({ _id: req.params.userId })
+    .then((user) => 
+      !user
+        ? res.status(404).json({ message: "This user does not exist" })
+        : Thought.findOneAndUpdate(
+            {user: req.params.userId},
+            {$pull: { user: req.params.userId } },
+            { new: true}
+          )
+    )
+    .then((thought) => 
+      !thought
+        ? res.status(404).json({ message: "User removed but no thoughts found." })
+        : res.json({ message: "All user data was deleted."})
+    )
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+  },
+
 };
+
