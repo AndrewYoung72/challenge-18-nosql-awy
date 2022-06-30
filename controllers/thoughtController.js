@@ -23,4 +23,29 @@ module.exports = {
       .then((socialNetworkDB) => res.json(socialNetworkDB))
       .catch((err) => res.status(500).json(err));
   },
+  // Delete a thought
+  deleteThought(req, res) {
+    Course.findOneAndDelete({ _id: req.params.courseId })
+      .then((course) =>
+        !course
+          ? res.status(404).json({ message: "No course with that ID" })
+          : Student.deleteMany({ _id: { $in: course.students } })
+      )
+      .then(() => res.json({ message: "Course and students deleted!" }))
+      .catch((err) => res.status(500).json(err));
+  },
+  // Update a thought
+  updateThought(req, res) {
+    Course.findOneAndUpdate(
+      { _id: req.params.thoughId },
+      { $set: req.body },
+      { runValidators: true, new: true }
+    )
+      .then((thought) =>
+        !thought
+          ? res.status(404).json({ message: "No thought with this id!" })
+          : res.json(thought)
+      )
+      .catch((err) => res.status(500).json(err));
+  },
 };

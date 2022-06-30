@@ -4,6 +4,7 @@ const {
   getSingleThought,
   createThought,
   deleteThought,
+  updateThought,
 } = require("../../controllers/thoughtController.js");
 
 // /api/thoughts/:thoughtId
