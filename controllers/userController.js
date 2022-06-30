@@ -50,6 +50,8 @@ module.exports = {
   },
   // Add a thought to a user
   addThought(req, res) {
+    console.log("Thought is being added to user ID");
+    console.log(req.body);
     User.findOneAndUpdate(
       { _id: req.params.userId },
       { $addToSet: { thought: req.body } },
@@ -73,7 +75,7 @@ module.exports = {
         !user
           ? res
               .status(404)
-              .json({ message: "No student found with that ID :(" })
+              .json({ message: "No such user exists, silly person!" })
           : res.json(user)
       )
       .catch((err) => res.status(500).json(err));
