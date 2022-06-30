@@ -1,40 +1,43 @@
 const mongoose = require("mongoose");
 const thoughtSchema = require("./Thought");
 
-
 const userSchema = new mongoose.Schema(
-{
-  username: {
-    type: String,
-    unique: true,
-    required: true,
-    trim: true,
-  },
-  email: {
-    type: String,
-    unique: true,
-    required: true,
-    // validate: [validateEmail, "Please fill a valid email address"],
-    match: [
-      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-      "Not a matching email address",
+  {
+    username: {
+      type: String,
+      unique: true,
+      required: true,
+      trim: true,
+    },
+    email: {
+      type: String,
+      unique: true,
+      required: true,
+      // validate: [validateEmail, "Please fill a valid email address"],
+      match: [
+        /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+        "Not a matching email address",
+      ],
+    },
+    thoughts: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: thoughtSchema,
+      },
+    ],
+    friends: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "user",
+      },
     ],
   },
-  thoughts: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: thoughtSchema,
-  }],
-  friends: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-  }],
-},
-{
-  toJSON: {
-    getters: true,
-  },
-  id: false,
-}
+  {
+    toJSON: {
+      getters: true,
+    },
+    id: false,
+  }
 );
 
 userSchema.virtual("friendCount").get(function () {
