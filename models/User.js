@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const thoughtSchema = require("./Thought");
 
+
 const userSchema = new mongoose.Schema(
 {
   username: {
@@ -16,16 +17,23 @@ const userSchema = new mongoose.Schema(
     // validate: [validateEmail, "Please fill a valid email address"],
     match: [
       /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-      "Please fill a valid email address",
+      "Not a matching email address",
     ],
   },
-  thoughts: [thoughtSchema],
-  friends: [],
+  thoughts: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: thoughtSchema,
+  }],
+  friends: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  }],
 },
 {
   toJSON: {
     getters: true,
   },
+  id: false,
 }
 );
 
