@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const thoughtSchema = require("./Thought");
 
 const userSchema = new mongoose.Schema(
 {
@@ -19,7 +20,7 @@ const userSchema = new mongoose.Schema(
     ],
   },
   thoughts: [thoughtSchema],
-  friends: [userSchema],
+  friends: [],
 },
 {
   toJSON: {
