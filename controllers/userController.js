@@ -21,7 +21,7 @@ module.exports = {
   // create a new user
   createUser(req, res) {
     User.create(req.body)
-      .then((socialNetworkDB) => res.json(socialNetworkDB))
+      .then((createdUser) => res.json(createdUser))
       .catch((err) => res.status(500).json(err));
   },
 
@@ -30,11 +30,7 @@ module.exports = {
       .then((user) =>
         !user
           ? res.status(404).json({ message: "This user does not exist" })
-          : Thought.findOneAndUpdate(
-              { user: req.params.userId },
-              { $pull: { user: req.params.userId } },
-              { new: true }
-            )
+          : Thought.deleteMany({ _id: { $in: user.thoughts } })
       )
       .then((thought) =>
         !thought
@@ -47,37 +43,5 @@ module.exports = {
         console.log(err);
         res.status(500).json(err);
       });
-  },
-  // Add a thought to a user
-  addThought(req, res) {
-    console.log("Thought is being added to user ID");
-    console.log(req.body);
-    User.findOneAndUpdate(
-      { _id: req.params.userId },
-      { $addToSet: { thought: req.body } },
-      { runValidators: true, new: true }
-    )
-      .then((user) =>
-        !user
-          ? res.status(404).json({ message: "This user does not exist!" })
-          : res.json(user)
-      )
-      .catch((err) => res.status(500).json(err));
-  },
-  // Remove a thought from a user
-  removeThought(req, res) {
-    User.findOneAndUpdate(
-      { _id: req.params.userId },
-      { $pull: { thought: { thoughtId: req.params.thoughtId } } },
-      { runValidators: true, new: true }
-    )
-      .then((user) =>
-        !user
-          ? res
-              .status(404)
-              .json({ message: "No such user exists, silly person!" })
-          : res.json(user)
-      )
-      .catch((err) => res.status(500).json(err));
   },
 };

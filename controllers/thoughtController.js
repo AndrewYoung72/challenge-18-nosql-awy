@@ -20,24 +20,42 @@ module.exports = {
   // create a new thought
   createThought(req, res) {
     Thought.create(req.body)
-      .then((socialNetworkDB) => res.json(socialNetworkDB))
+      .then((thoughtCreated) => {
+        User.findOneAndUpdate(
+          { _id: req.body.userId },
+          { $addToSet: { thoughts: thoughtCreated._id } },
+          { runValidators: true, new: true }
+        ).then((user) =>
+          !user
+            ? res.status(404).json({ message: "This user does not exist!" })
+            : res.json(user)
+        );
+      })
       .catch((err) => res.status(500).json(err));
   },
   // Delete a thought
   deleteThought(req, res) {
-    Course.findOneAndDelete({ _id: req.params.courseId })
-      .then((course) =>
-        !course
-          ? res.status(404).json({ message: "No course with that ID" })
-          : Student.deleteMany({ _id: { $in: course.students } })
-      )
-      .then(() => res.json({ message: "Course and students deleted!" }))
+    Thought.findOneAndDelete({ _id: req.params.thoughtId })
+      .then((deletedThought) => {
+        User.findOneAndUpdate(
+          { _id: req.body.userId },
+          { $pull: { thoughts:  deletedThought._id }},
+          { runValidators: true, new: true }
+        ).then((user) =>
+          !user
+            ? res
+                .status(404)
+                .json({ message: "No such user exists, silly person!" })
+            : res.json(user)
+        );
+      })
+      .then(() => res.json({ message: "Thought and user deleted!" }))
       .catch((err) => res.status(500).json(err));
   },
   // Update a thought
   updateThought(req, res) {
-    Course.findOneAndUpdate(
-      { _id: req.params.thoughId },
+    Thought.findOneAndUpdate(
+      { _id: req.params.thoughtId },
       { $set: req.body },
       { runValidators: true, new: true }
     )
