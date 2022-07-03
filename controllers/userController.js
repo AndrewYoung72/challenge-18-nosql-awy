@@ -45,18 +45,19 @@ module.exports = {
       });
   },
 
-  addFriend(req, res) {
-    User.findOneAndUpdate(
-      { _id: req.params.userId },
-      { $addToSet: { friends: req.body } },
-      { runValidators: true, new: true }
-    )
-      .then((createFriend) =>
-        !createFriend
-          ? res.status(404).json({ message: 'No user with this id!' })
-          : res.json(createFriend, {message: "Friend was added!"})
-      )
+  createFriend(req, res) {
+    User.create(req.body)
+      .then((createFriend) => {
+        User.findOneAndUpdate(
+          { _id: req.body.userId },
+          { $addToSet: { friends: createFriend._id } },
+          { runValidators: true, new: true }
+        ).then((user) =>
+          !user
+            ? res.status(404).json({ message: "No user with this id!" })
+            : res.json(user, { message: "Friend was added!" })
+        );
+      })
       .catch((err) => res.status(500).json(err));
   },
-
 };
