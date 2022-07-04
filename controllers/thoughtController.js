@@ -71,18 +71,16 @@ module.exports = {
 
   //Create Reaction
   createReaction(req, res) {
-    reactionSchema.create(req.body)
-      .then((reactionCreated) => {
-        Thought.findOneAndUpdate(
-          { _id: req.params.thoughtId },
-          { $addToSet: { reactions: reactionCreated.body } },
-          { runValidators: true, new: true }
-        ).then((thought) =>
-          !thought
-            ? res.status(404).json({ message: "No thought with this id!" })
-            : res.json(thought)
-        );
-      })
+    Thought.findOneAndUpdate(
+      { _id: req.params.thoughtId },
+      { $addToSet: { reactions: req.body } },
+      { runValidators: true, new: true }
+    )
+      .then((thought) =>
+        !thought
+          ? res.status(404).json({ message: "No thought with this id!" })
+          : res.json(thought)
+      )
       .catch((err) => res.status(500).json(err));
   },
 

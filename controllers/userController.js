@@ -44,20 +44,32 @@ module.exports = {
         res.status(500).json(err);
       });
   },
-
+  //Add friend second approach
   createFriend(req, res) {
-    User.create(req.body)
-      .then((createFriend) => {
-        User.findOneAndUpdate(
-          { _id: req.body.userId },
-          { $addToSet: { friends: createFriend._id } },
-          { runValidators: true, new: true }
-        ).then((user) =>
-          !user
-            ? res.status(404).json({ message: "No user with this id!" })
-            : res.json(user, { message: "Friend was added!" })
-        );
-      })
+    User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $addToSet: { friends: req.body._id } },
+      { runValidators: true, new: true }
+    ).then((user) =>
+        !user
+          ? res.status(404).json({ message: "No user with this id!" })
+          : res.json(user)
+      )
       .catch((err) => res.status(500).json(err));
   },
+  // createFriend(req, res) {
+  //   User.create(req.body)
+  //     .then((createdFriend) => {
+  //       User.findOneAndUpdate(
+  //         { _id: req.params.userId },
+  //         { $addToSet: { friends: createdFriend._id } },
+  //         { runValidators: true, new: true }
+  //       ).then((user) =>
+  //         !user
+  //           ? res.status(404).json({ message: "No user with this id!" })
+  //           : res.json(user, { message: "Friend was added!" })
+  //       );
+  //     })
+  //     .catch((err) => res.status(500).json(err));
+  // },
 };
