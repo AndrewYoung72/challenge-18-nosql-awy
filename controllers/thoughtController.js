@@ -51,7 +51,7 @@ module.exports = {
             : res.json(user)
         );
       })
-      .then(() => res.json({ message: "Thought and user deleted!" }))
+      .then(() => res.json({ message: "Thought was deleted!" }))
       .catch((err) => res.status(500).json(err));
   },
   // Update a thought
@@ -86,7 +86,8 @@ module.exports = {
 
   //Delete Reaction
   deleteReaction(req, res) {
-    reactionSchema.findOneAndDelete({ _id: req.params.reactionId })
+    reactionSchema
+      .findOneAndDelete({ _id: req.params.reactionId })
       .then((deletedReaction) => {
         Thought.findOneAndUpdate(
           { _id: req.body.thoughtId },
@@ -94,9 +95,7 @@ module.exports = {
           { runValidators: true, new: true }
         ).then((thought) =>
           !thought
-            ? res
-                .status(404)
-                .json({ message: "No such thought exists!" })
+            ? res.status(404).json({ message: "No such thought exists!" })
             : res.json(thought)
         );
       })

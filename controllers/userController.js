@@ -45,31 +45,35 @@ module.exports = {
       });
   },
   //Add friend second approach
-  createFriend(req, res) {
-    User.findOneAndUpdate(
-      { _id: req.params.userId },
-      { $addToSet: { friends: req.body._id } },
-      { runValidators: true, new: true }
-    ).then((user) =>
-        !user
-          ? res.status(404).json({ message: "No user with this id!" })
-          : res.json(user)
-      )
-      .catch((err) => res.status(500).json(err));
-  },
   // createFriend(req, res) {
-  //   User.create(req.body)
-  //     .then((createdFriend) => {
-  //       User.findOneAndUpdate(
-  //         { _id: req.params.userId },
-  //         { $addToSet: { friends: createdFriend._id } },
-  //         { runValidators: true, new: true }
-  //       ).then((user) =>
-  //         !user
-  //           ? res.status(404).json({ message: "No user with this id!" })
-  //           : res.json(user, { message: "Friend was added!" })
-  //       );
-  //     })
+  //   User.findOneAndUpdate(
+  //     { _id: req.params.userId },
+  //     { $addToSet: { friends: req.body } },
+  //     { runValidators: true, new: true }
+  //   ).then((user) =>
+  //       !user
+  //         ? res.status(404).json({ message: "No user with this id!" })
+  //         : res.json(user)
+  //     )
   //     .catch((err) => res.status(500).json(err));
   // },
+
+  // Working route for add friend, but with terminal error then data shows after terminal restart
+  createFriend(req, res) {
+    User.create(req.body)
+      .then((createdFriend) => {
+        User.findOneAndUpdate(
+          { _id: req.params.userId },
+          { $addToSet: { friends: createdFriend._id } },
+          { runValidators: true, new: true }
+        ).then((user) =>
+          !user
+            ? res.status(404).json({ message: "No user with this id!" })
+            : res.json(user)
+        );
+      })
+      .catch((err) => res.status(500).json(err));
+  },
+
+  removeFriend(req, res) {},
 };
