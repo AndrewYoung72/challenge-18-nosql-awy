@@ -37,7 +37,7 @@ module.exports = {
           ? res
               .status(404)
               .json({ message: "User removed but no thoughts found." })
-          : res.json({ message: "All user data was deleted." })
+          : res.status(200).json({ message: "All user data was deleted." })
       )
       .catch((err) => {
         console.log(err);
@@ -69,11 +69,26 @@ module.exports = {
         ).then((user) =>
           !user
             ? res.status(404).json({ message: "No user with this id!" })
-            : res.json(user)
+            : res.status(200).json(user)
         );
       })
       .catch((err) => res.status(500).json(err));
   },
 
-  removeFriend(req, res) {},
+  removeFriend(req, res) {
+    User.findOne({ _id: req.params._id })
+    .then((deletedFriend) => {
+      User.findOneAndUpdate(
+        {_id: req.body.userId},
+        {$pull: {friends: deletedFriend._id}},
+        {runValidators: true, new: true}
+      ).then((user) => 
+        !user
+        ? res.status(404).json({message: "No such user exists ding dong!"})
+        : res.status(200).json(user)
+      );
+    })
+    .then(() => res.json({ message: "Friend removed!" }))
+    .catch((err) => res.status(500).json(err));
+  },
 };
