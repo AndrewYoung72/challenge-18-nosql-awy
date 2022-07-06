@@ -3,17 +3,17 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ## Description
-  generate sa form readme
+  This project was a build from scracth project using MongoDB and Mongoose. This was my first project using Mongoose and I find it much simpler to work with than MySQL. I used different methods on my models for learning purposes, and I tried to use comments as much as possible to explain what I needed to do before I built it. I have been struggling with getting the reactions and friends routes working properly. The friends create route only works correctly when a new user is created while adding a friend. Then the fiend count and add friend_id works. 
  
 
 ## Table of Contents
   - [Installation](#installation)
-  - [Fututre Development](#futureDevelopment)
+  - [Fututre Development](#usage)
   - [Credits](#credits)
   - [License](#license)
 
 ## Installation
-  none
+  Entering node index.js in the CLI will spin up the server and a prompt will be displayed in the terminal stating "API server running on port 3001!". From there the use can interact with the server on Insomnia.
 
 
 ## Future Development
@@ -22,8 +22,6 @@
 
 ## Credits
   https://github.com/AndrewYoung72
- 
-  
 
 ## License
   Apache 2.0 License
@@ -37,8 +35,8 @@
  
 
 ## Questions
-- GitHub User Link: https://github.com/AndrewYoung72/AWY-Readme-generator
+- GitHub User Link: https://github.com/AndrewYoung72
  
 - Email: awyimtb@gmail.com
 
-- GitHub Project Link: https://github.com/AndrewYoung72/AWY-Readme-generator
+- GitHub Project Link: https://github.com/AndrewYoung72/challenge-18-nosql-awy
