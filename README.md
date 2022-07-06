@@ -3,13 +3,12 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ## Description
-  This project was a build from scracth project using MongoDB and Mongoose. This was my first project using Mongoose and I find it much simpler to work with than MySQL. I used different methods on my models for learning purposes, and I tried to use comments as much as possible to explain what I needed to do before I built it. I have been struggling with getting the reactions and friends routes working properly. The friends create route only works correctly when a new user is created while adding a friend. Then the fiend count and add friend_id works. 
+  This project was a build from scracth project using MongoDB and Mongoose. This was my first project using Mongoose and I find it much simpler to work with than MySQL. I used different methods on my models for learning purposes, and I tried to use comments as much as possible to explain what I needed to do before I built it. I have been struggling with getting the reactions and friends routes working properly. The friends create route only works correctly when a new user is created while adding a friend. Then the fiend count increases and the friend _id is added to the friends: virtual. Also, I was able to add a reaction but not remove a reaction. Now I can remove a reaction but not add a reaction. I am getting a 200 wrong route response so I know I am close. All of the User and Thought routes function properly.
  
 
 ## Table of Contents
   - [Installation](#installation)
   - [Fututre Development](#usage)
-  - [Credits](#credits)
   - [License](#license)
 
 ## Installation
@@ -17,24 +16,17 @@
 
 
 ## Future Development
-  coming soon
+  I would like to get the reaction routes working correctly and the friends routes working without having to create a user when adding a friend. It should just add an id to the friends: array and increase the friends count without requiring a new user to be created.
  
 
-## Credits
-  https://github.com/AndrewYoung72
 
 ## License
-  Apache 2.0 License
-
-
-- License Link: https://opensource.org/licenses/Apache-2.0
-- License Definition: https://opensource.org/osd
-
+None
 ## Tests
-  no test yet
+None
  
 
-## Questions
+## Questions/Feedback
 - GitHub User Link: https://github.com/AndrewYoung72
  
 - Email: awyimtb@gmail.com
