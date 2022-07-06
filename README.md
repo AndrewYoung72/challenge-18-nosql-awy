@@ -3,7 +3,9 @@
 
 
 ## Description
-  This project was a build from scracth project using MongoDB and Mongoose. This was my first project using Mongoose and I find it much simpler to work with than MySQL. I used different methods on my models for learning purposes, and I tried to use comments as much as possible to explain what I needed to do before I built it. I have been struggling with getting the reactions and friends routes working properly. The friends create route only works correctly when a new user is created while adding a friend. Then the fiend count increases and the friend _id is added to the friends: virtual. Also, I was able to add a reaction but not remove a reaction. Now I can remove a reaction but not add a reaction. I am getting a 200 wrong route response so I know I am close. All of the User and Thought routes function properly.
+  This project was a build from scracth project using MongoDB and Mongoose. This was my first project using Mongoose and I find it much simpler to work with than MySQL. I used different methods on my models for learning purposes, and I tried to use comments as much as possible to explain what I needed to do before I built it. I have been struggling with getting the reactions and friends routes working properly. The friends create route only works correctly when a new user is created while adding a friend. Then the fiend count increases and the friend _id is added to the friends: virtual. Also, I was able to add a reaction but not remove a reaction. Now I can remove a reaction but not add a reaction. I am getting a 200 wrong route response so I know I am close.
+
+  The User and Thought routes area all properly. I am able to create, update, and delete a single user, as well as, retrieve a list of all users. The thought routes can create, update, and delete a single, and return all thoughts.
  
 
 ## Table of Contents
