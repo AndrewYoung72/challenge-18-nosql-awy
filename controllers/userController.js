@@ -24,6 +24,19 @@ module.exports = {
       .then((createdUser) => res.json(createdUser))
       .catch((err) => res.status(500).json(err));
   },
+  // Update user info
+  updateUser(req, res) {
+    User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $set: req.body },
+      { runValidators: true, new: true }
+    ).then((user) => 
+    !user
+      ? res.status(404).json({message:"No user with this ID!"})
+      : res.status(200).json(user)
+    )
+    .catch((err) => res.status(500).json(err));
+  },
 
   deleteUser(req, res) {
     User.findOneAndRemove({ _id: req.params.userId })
@@ -44,16 +57,16 @@ module.exports = {
         res.status(500).json(err);
       });
   },
-  //Add friend second approach
+  // Add friend second approach/ future development/ not working
   // createFriend(req, res) {
   //   User.findOneAndUpdate(
   //     { _id: req.params.userId },
-  //     { $addToSet: { friends: req.body } },
+  //     { $addToSet: { friends: req.body._id } },
   //     { runValidators: true, new: true }
   //   ).then((user) =>
   //       !user
   //         ? res.status(404).json({ message: "No user with this id!" })
-  //         : res.json(user)
+  //         : res.status(200).json(user)
   //     )
   //     .catch((err) => res.status(500).json(err));
   // },
@@ -75,20 +88,23 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
 
+  // Not funtioning/ future devlepment
   removeFriend(req, res) {
     User.findOne({ _id: req.params._id })
-    .then((deletedFriend) => {
-      User.findOneAndUpdate(
-        {_id: req.body.userId},
-        {$pull: {friends: deletedFriend._id}},
-        {runValidators: true, new: true}
-      ).then((user) => 
-        !user
-        ? res.status(404).json({message: "No such user exists ding dong!"})
-        : res.status(200).json(user)
-      );
-    })
-    .then(() => res.json({ message: "Friend removed!" }))
-    .catch((err) => res.status(500).json(err));
+      .then((deletedFriend) => {
+        User.findOneAndUpdate(
+          { _id: req.body.userId },
+          { $pull: { friends: deletedFriend._id } },
+          { runValidators: true, new: true }
+        ).then((user) =>
+          !user
+            ? res
+                .status(404)
+                .json({ message: "No such user exists ding dong!" })
+            : res.status(200).json(user)
+        );
+      })
+      .then(() => res.json({ message: "Friend removed from user's list!" }))
+      .catch((err) => res.status(500).json(err));
   },
 };

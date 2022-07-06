@@ -86,20 +86,16 @@ module.exports = {
 
   //Delete Reaction
   deleteReaction(req, res) {
-    reactionSchema
-      .findOneAndDelete({ _id: req.params.reactionId })
-      .then((deletedReaction) => {
-        Thought.findOneAndUpdate(
-          { _id: req.body.thoughtId },
-          { $pull: { reactions: deletedReaction._id } },
-          { runValidators: true, new: true }
-        ).then((thought) =>
-          !thought
-            ? res.status(404).json({ message: "No such thought exists!" })
-            : res.status(200).json(thought)
-        );
-      })
-      .then(() => res.json({ message: "Reaction deleted!" }))
+    Thought.findOneAndUpdate(
+      { _id: req.params.thoughtId },
+      { $pull: { reactions: req.body } },
+      { runValidators: true, new: true }
+    )
+      .then((thought) =>
+        !thought
+          ? res.status(404).json({ message: "No thought with this id!" })
+          : res.status(200).json(thought)
+      )
       .catch((err) => res.status(500).json(err));
   },
 };
